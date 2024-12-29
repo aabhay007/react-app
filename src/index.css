@@ -1,38 +1,58 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #f9f2f2;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  /* Custom Spacing Variables */
+  --container-padding: 2rem;
+  --card-padding: 1.5rem;
+  --card-border-radius: 12px;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--color);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+a {
+  font-weight: 500;
+  color: #7289da;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #5061b9;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+p {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.5em 0;
 }
 
 button {
@@ -42,27 +62,45 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #3a3a3a;
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s ease-in-out;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #7289da;
+  background-color: #505050;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:focus {
+  outline: 3px solid #7289da;
+}
+
+.card {
+  background: #333;
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #2b2b2b;
+    background-color: #f5f5f5;
+  }
+  a {
+    color: #3a6fb0;
   }
   a:hover {
-    color: #747bff;
+    color: #285689;
   }
-  button {
-    background-color: #f9f9f9;
+  .card {
+    background: white;
+    color: #2b2b2b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 }
