@@ -1,7 +1,7 @@
 import React from 'react';
 
 const UserForm: React.FC = () => {
-  return <div>User Form Placeholder</div>;
+  return <div style={{color:'black'}}>User Form Placeholder</div>;
 };
 
 export default UserForm;

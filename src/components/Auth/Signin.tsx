@@ -16,9 +16,9 @@ const Signin: React.FC = () => {
     try {
       const response = await api.post('signin/', { username, password });
       if (response.status === 200) {
-        const token = response.data.token;
+        const token = response.data.access;
         dispatch(login(token));
-        navigate('/');
+        navigate('/user-management');
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'An error occurred');
