@@ -4,12 +4,14 @@ import api from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { login } from '../../features/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 const Signin: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +20,21 @@ const Signin: React.FC = () => {
       if (response.status === 200) {
         const token = response.data.access;
         dispatch(login(token));
-        navigate('/user-management');
+
+        // Decode the JWT token to extract the user role
+        const decodedToken: any = jwtDecode(token);
+        const userRole = decodedToken.role; // Assuming the role is in the "role" field
+        // Navigate based on the user's role
+        if (userRole === 'USER') {
+          navigate('/user');
+        } else if (userRole === 'ADMIN') {
+          navigate('/user-management');
+        } else if (userRole === 'AGENCY') {
+          navigate('/agency');
+        } else {
+          // If role is not recognized, redirect to a default page or show an error
+          navigate('/');
+        }
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'An error occurred');
@@ -27,7 +43,9 @@ const Signin: React.FC = () => {
 
   return (
     <Container maxWidth="xs" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom sx={{color:'grey.600'}}>Sign In</Typography>
+      <Typography variant="h4" gutterBottom sx={{ color: 'grey.600' }}>
+        Sign In
+      </Typography>
       <form onSubmit={handleSignin}>
         <Box display="flex" flexDirection="column" gap={2}>
           <TextField

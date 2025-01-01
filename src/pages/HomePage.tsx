@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Typography, Box } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
+import ScreenRecorder from "../components/Capture/Capture";
 const HomePage: React.FC = () => {
   return (
     <div>
@@ -14,6 +15,7 @@ const HomePage: React.FC = () => {
             This is the home page. Navigate through the app to explore more
             features!
           </Typography>
+          <ScreenRecorder/>
         </Box>
       </Container>
     </div>
