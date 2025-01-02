@@ -14,7 +14,8 @@ const Signup: React.FC = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await api.post('signup/', { email, username, password });
+    //  const response = await api.post('http://127.0.0.1:8000/api/signup/', { email, username, password });
+      const response = await api.post('https://captureme-apis.onrender.com/api/signup/', { email, username, password });
       if (response.status === 201) {
         setSuccess('Account created successfully!');
         setError('');

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Container, Box, Alert } from '@mui/material';
-import api from '../../utils/api';
+// import api from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import { login } from '../../features/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 const Signin: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -16,13 +17,15 @@ const Signin: React.FC = () => {
   const handleSignin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await api.post('signin/', { username, password });
+     // const response = await axios.post('http://127.0.0.1:8000/api/signin/', { username, password });
+      const response = await axios.post('https://captureme-apis.onrender.com/api/signin/', { username, password });
       if (response.status === 200) {
         const token = response.data.access;
         dispatch(login(token));
 
         // Decode the JWT token to extract the user role
         const decodedToken: any = jwtDecode(token);
+
         const userRole = decodedToken.role; // Assuming the role is in the "role" field
         // Navigate based on the user's role
         if (userRole === 'USER') {

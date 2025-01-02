@@ -6,6 +6,24 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: 'https://captureme-apis.onrender.com/api/',
 });
+api.interceptors.request.use(
+  (config) => {
+    const authData = localStorage.getItem('persist:auth');
+    if (authData) {
+      const parsedAuth = JSON.parse(authData);
+      const token = parsedAuth.token?.replace(/"/g, ''); // Remove extra quotes if present
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => {
+    // Handle the error
+    return Promise.reject(error);
+  }
+);
+
 //test
 interface User {
   id: number;

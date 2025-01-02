@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import api from "../../utils/api"; // Import your Axios instance
 
 const ScreenRecorder: React.FC = () => {
   const [recording, setRecording] = useState(false);
@@ -26,6 +27,7 @@ const ScreenRecorder: React.FC = () => {
       setRecording(true);
     } catch (err) {
       console.error("Error starting screen recording:", err);
+      alert("Failed to start screen recording.");
     }
   };
 
@@ -42,23 +44,24 @@ const ScreenRecorder: React.FC = () => {
       formData.append("video", blob, "recording.webm");
 
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/recordings/", {
-          method: "POST",
-          body: formData,
+        const response = await api.post("recordings/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Uploaded successfully:", data);
+        if (response.status === 201) {
+          console.log("Uploaded successfully:", response.data);
           alert("Recording saved successfully!");
           setRecordedChunks([]); // Clear recorded chunks
           setShowSavePopup(false); // Close popup
         } else {
-          console.error("Failed to upload recording");
+          console.error("Failed to upload recording:", response);
           alert("Failed to save recording.");
         }
       } catch (error) {
         console.error("Error uploading recording:", error);
+        alert("An error occurred while saving the recording.");
       }
     }
   };
@@ -79,7 +82,7 @@ const ScreenRecorder: React.FC = () => {
 
       {showSavePopup && (
         <div style={{ marginTop: "20px", border: "1px solid #ccc", padding: "20px" }}>
-          <p>Do you want to save this recording?</p>
+          <p style={{ color: "#000" }}>Do you want to save this recording?</p>
           <button onClick={saveRecording} style={{ marginRight: "10px" }}>
             Save
           </button>
